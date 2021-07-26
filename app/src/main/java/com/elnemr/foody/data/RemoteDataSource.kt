@@ -1,4 +1,6 @@
 package com.elnemr.foody.data
 
-class RemoteDataSource() {
+import javax.inject.Inject
+
+class RemoteDataSource @Inject constructor(val apiInterface: ApiInterface) {
 }
