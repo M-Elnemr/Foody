@@ -8,6 +8,8 @@ import com.elnemr.foody.adapters.base.BaseAdapter
 import com.elnemr.foody.adapters.base.BaseViewHolder
 import com.elnemr.foody.databinding.RecipesRowLayoutBinding
 import com.elnemr.foody.models.Result
+import okhttp3.OkHttpClient
+import okhttp3.Response
 
 
 class RecipesAdapter : BaseAdapter<Result>() {

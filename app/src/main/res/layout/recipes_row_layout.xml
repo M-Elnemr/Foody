@@ -10,31 +10,25 @@
             type="com.elnemr.foody.models.Result" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp">
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="0dp"
-            android:layout_height="150dp"
-            app:cardCornerRadius="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_margin="4dp"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardCornerRadius="8dp"
+            android:elevation="4dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white">
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/recipe_image"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:contentDescription="sdsds"
+                    loadImage="@{result.image}"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -45,113 +39,130 @@
                     android:id="@+id/recipe_text_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_margin="4dp"
                     android:ellipsize="end"
                     android:maxLines="2"
+                    android:text="@{result.title}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@android:color/black"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/recipe_image"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@{result.title}" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/description_text_view"
+<!--                <TextView-->
+<!--                    android:id="@+id/description_text_view"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="4dp"-->
+<!--                    android:ellipsize="end"-->
+<!--                    android:textColor="@color/darkGray"-->
+<!--                    android:maxLines="2"-->
+<!--                    android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintHorizontal_bias="0.0"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/recipe_image"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/recipe_text_view"-->
+<!--                    android:text="@{result.summary}" />-->
+
+
+
+
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:ellipsize="end"
-                    android:maxLines="3"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/recipe_image"
-                    app:layout_constraintTop_toBottomOf="@+id/recipe_text_view"
-                    tools:text="@{result.summary}" />
+                    app:layout_constraintTop_toBottomOf="@+id/recipe_text_view">
 
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:id="@+id/heartImageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_favorite"
+                            app:tint="#F44336" />
 
-                <ImageView
-                    android:id="@+id/heartImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="35dp"
-                    android:src="@drawable/ic_favorite"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/likesTextView"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="@+id/likesTextView"
-                    app:layout_constraintTop_toBottomOf="@+id/description_text_view"
-                    app:layout_constraintVertical_bias="0.112"
-                    app:tint="#F44336" />
+                        <TextView
+                            android:id="@+id/likesTextView"
+                            textInt="@{result.aggregateLikes}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="100"
+                            android:textAlignment="center"
+                            android:textColor="#EF5350"
+                            android:textStyle="bold"
+                            tools:layout_editor_absoluteY="24dp" />
+                    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/likesTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textColor="#EF5350"
-                    textInt="@{result.aggregateLikes}"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/description_text_view"
-                    app:layout_constraintTop_toBottomOf="@+id/heartImageView" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/clockImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_clock"
+                        app:tint="#FF9800"
+                        tools:layout_editor_absoluteX="48dp" />
 
-                <ImageView
-                    android:id="@+id/clockImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_clock"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/clockTextView"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@+id/clockTextView"
-                    app:layout_constraintTop_toTopOf="@+id/heartImageView"
-                    app:layout_constraintVertical_bias="0.0"
-                    app:tint="#FF9800" />
+                    <TextView
+                        android:id="@+id/clockTextView"
+                        textInt="@{result.readyInMinutes}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="100"
+                        android:textAlignment="center"
+                        android:textColor="#FFA726"
+                        android:textStyle="bold"
+                        tools:layout_editor_absoluteX="48dp"
+                        tools:layout_editor_absoluteY="24dp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/clockTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:textAlignment="center"
-                    android:textColor="#FFA726"
-                    textInt="@{result.readyInMinutes}"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/likesTextView"
-                    app:layout_constraintTop_toBottomOf="@+id/clockImageView" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/leafImageView"
+                        backgroundBooleanGreen="@{result.vegan}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_leaf"
+                        app:tint="#4CAF50"
+                        tools:layout_editor_absoluteX="96dp"
+                        tools:layout_editor_absoluteY="76dp" />
 
-                <ImageView
-                    android:id="@+id/leafImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_leaf"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/leafTextView"
-                    app:layout_constraintStart_toStartOf="@+id/leafTextView"
-                    app:layout_constraintTop_toTopOf="@+id/clockImageView"
-                    app:layout_constraintVertical_bias="0.0"
-                    backgroundBooleanGreen="@{result.vegan}"
-                    app:tint="#4CAF50" />
+                    <TextView
+                        android:id="@+id/leafTextView"
+                        backgroundBooleanGreen="@{result.vegan}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vegan"
+                        android:textAlignment="center"
+                        android:textColor="#66BB6A"
+                        android:textStyle="bold"
+                        tools:layout_editor_absoluteX="96dp"
+                        tools:layout_editor_absoluteY="100dp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/leafTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:textAlignment="center"
-                    backgroundBooleanGreen="@{result.vegan}"
-                    android:textColor="#66BB6A"
-                    android:textStyle="bold"
-                    android:text="Vegan"
-                    app:layout_constraintStart_toEndOf="@+id/clockTextView"
-                    app:layout_constraintTop_toBottomOf="@+id/leafImageView"/>
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.cardview.widget.CardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

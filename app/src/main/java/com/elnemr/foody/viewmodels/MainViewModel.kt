@@ -1,10 +1,11 @@
-package com.elnemr.foody
+package com.elnemr.foody.viewmodels
 
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -31,13 +32,16 @@ class MainViewModel @Inject constructor(
 
     private suspend fun getRecipesSafeCall(queries: HashMap<String, String>) {
         recipesResponse.value = NetworkResult.Loading()
-        val response = repository.remoteDataSource.getRecipes(queries)
-
-        recipesResponse.value = handleRecipesFoodResponse(response)
+        try {
+            val response = repository.remoteDataSource.getRecipes(queries)
+            recipesResponse.value = handleRecipesFoodResponse(response)
+        }catch (e : Exception){
+            Log.d("TAG", "getRecipesSafeCall: "+ e)
+            recipesResponse.value = NetworkResult.Error("Bad Internet")
+        }
     }
 
-    private fun handleRecipesFoodResponse(response: Response<FoodRecipe>): NetworkResult<FoodRecipe>? {
-
+    private fun handleRecipesFoodResponse(response: Response<FoodRecipe>): NetworkResult<FoodRecipe> {
         return when{
             response.message().toString().contains("timeout") -> NetworkResult.Error("TimeOut")
             response.code() == 402 -> NetworkResult.Error("API Key Limited.")

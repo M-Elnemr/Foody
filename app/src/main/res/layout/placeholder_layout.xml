@@ -3,17 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="100dp"
     android:layout_marginStart="4dp"
     android:layout_marginTop="4dp"
     android:layout_marginEnd="4dp"
     android:layout_marginBottom="4dp">
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
-    <ImageView
+        <ImageView
         android:id="@+id/recipe_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:padding="48dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:padding="24dp"
         android:background="#5B939393"
         app:tint="@color/white"
         android:src="@drawable/ic_food_joke"
@@ -47,74 +60,134 @@
         app:layout_constraintStart_toEndOf="@+id/recipe_image"
         app:layout_constraintTop_toBottomOf="@+id/recipe_text_view" />
 
-    <View
-        android:id="@+id/description_text_view"
+<!--    <View-->
+<!--        android:id="@+id/description_text_view"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="6dp"-->
+<!--        android:layout_marginStart="12dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginEnd="12dp"-->
+<!--        android:background="#5B939393"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/recipe_image"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/recipe_text_view2" />-->
+
+<!--    <View-->
+<!--        android:id="@+id/description_text_view2"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="6dp"-->
+<!--        android:layout_marginStart="12dp"-->
+<!--        android:layout_marginTop="4dp"-->
+<!--        android:layout_marginEnd="12dp"-->
+<!--        android:background="#5B939393"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/recipe_image"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/description_text_view" />-->
+
+<!--    <View-->
+<!--        android:id="@+id/description_text_view3"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="6dp"-->
+<!--        android:layout_marginStart="12dp"-->
+<!--        android:layout_marginTop="4dp"-->
+<!--        android:layout_marginEnd="12dp"-->
+<!--        android:background="#5B939393"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/recipe_image"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/description_text_view2" />-->
+
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="6dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="12dp"
-        android:background="#5B939393"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/recipe_image"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_text_view2" />
+        app:layout_constraintTop_toBottomOf="@+id/recipe_text_view">
 
-    <View
-        android:id="@+id/description_text_view2"
+
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="6dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="12dp"
-        android:background="#5B939393"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/recipe_image"
-        app:layout_constraintTop_toBottomOf="@+id/description_text_view" />
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/heartImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_favorite"
+            app:tint="@color/darkGray" />
+        <View
+            android:layout_width="24dp"
+            android:layout_height="6dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="12dp"
+            android:background="#5B939393"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/recipe_image"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_text_view" />
+    </LinearLayout>
 
-    <View
-        android:id="@+id/description_text_view3"
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="6dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="12dp"
-        android:background="#5B939393"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/recipe_image"
-        app:layout_constraintTop_toBottomOf="@+id/description_text_view2" />
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_clock"
+            app:tint="@color/darkGray" />
+        <View
+            android:layout_width="24dp"
+            android:layout_height="6dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="12dp"
+            android:background="#5B939393"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/recipe_image"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_text_view" />
+    </LinearLayout>
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="12dp"
-        android:background="#5B939393"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/description_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/description_text_view3" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_leaf"
+            app:tint="@color/darkGray" />
+        <View
+            android:layout_width="24dp"
+            android:layout_height="6dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="12dp"
+            android:background="#5B939393"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/recipe_image"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_text_view" />
+    </LinearLayout>
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="12dp"
-        android:background="#5B939393"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/view"
-        app:layout_constraintTop_toTopOf="@+id/view"
-        app:layout_constraintVertical_bias="0.0" />
 
-    <View
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="12dp"
-        android:background="#5B939393"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="@+id/view2"
-        app:layout_constraintVertical_bias="0.0" />
+</LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
