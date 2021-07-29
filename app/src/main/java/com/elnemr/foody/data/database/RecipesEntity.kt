@@ -7,7 +7,7 @@ import com.elnemr.foody.util.Constants.Companion.TABLE
 
 @Entity(tableName = TABLE)
 class RecipesEntity(
-   foodRecipe: FoodRecipe
+   var foodRecipe: FoodRecipe
 ){
     @PrimaryKey(autoGenerate = false)
     var id: Int = 0

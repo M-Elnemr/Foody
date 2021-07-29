@@ -7,13 +7,13 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.elnemr.foody.data.Repository
+import com.elnemr.foody.data.database.RecipesEntity
 import com.elnemr.foody.models.FoodRecipe
 import com.elnemr.foody.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import javax.inject.Inject
@@ -24,6 +24,16 @@ class MainViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
+    /** ROOM DATABASE*/
+    fun readRecipes(): LiveData<List<RecipesEntity>> =
+        repository.localDataSource.fetchData().asLiveData()
+
+    private fun insertRecipes(recipesEntity: RecipesEntity) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.localDataSource.insertData(recipesEntity)
+        }
+
+    /** RETROFIT*/
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
 
     fun getRecipes(queries: HashMap<String, String>) = viewModelScope.launch {
@@ -35,14 +45,25 @@ class MainViewModel @Inject constructor(
         try {
             val response = repository.remoteDataSource.getRecipes(queries)
             recipesResponse.value = handleRecipesFoodResponse(response)
-        }catch (e : Exception){
-            Log.d("TAG", "getRecipesSafeCall: "+ e)
+
+            offlineCacheRecipes(recipesResponse.value!!.data)
+
+        } catch (e: Exception) {
+
+            Log.d("TAG", "getRecipesSafeCall: " + e)
             recipesResponse.value = NetworkResult.Error("Bad Internet")
         }
     }
 
+    private fun offlineCacheRecipes(foodRecipe: FoodRecipe?) {
+        if (foodRecipe != null) {
+            val recipesEntity = RecipesEntity(foodRecipe)
+            insertRecipes(recipesEntity)
+        }
+    }
+
     private fun handleRecipesFoodResponse(response: Response<FoodRecipe>): NetworkResult<FoodRecipe> {
-        return when{
+        return when {
             response.message().toString().contains("timeout") -> NetworkResult.Error("TimeOut")
             response.code() == 402 -> NetworkResult.Error("API Key Limited.")
             response.body()!!.results.isNullOrEmpty() -> NetworkResult.Error("No Recipes Found.")
@@ -53,7 +74,7 @@ class MainViewModel @Inject constructor(
 
 
     @RequiresApi(Build.VERSION_CODES.M)
-    private fun hasInternetConnection() : Boolean{
+    private fun hasInternetConnection(): Boolean {
 
 
         val connectivityManager = getApplication<Application>().getSystemService(
@@ -62,7 +83,7 @@ class MainViewModel @Inject constructor(
 
         val activeNetwork = connectivityManager.activeNetwork ?: return false
         val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-        return when{
+        return when {
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true

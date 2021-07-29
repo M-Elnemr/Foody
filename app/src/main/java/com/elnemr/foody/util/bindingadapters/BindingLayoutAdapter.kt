@@ -7,6 +7,9 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import coil.load
 import com.elnemr.foody.R
+import com.elnemr.foody.data.database.RecipesEntity
+import com.elnemr.foody.models.FoodRecipe
+import com.elnemr.foody.util.NetworkResult
 
 class BindingLayoutAdapter {
     companion object {
@@ -38,8 +41,39 @@ class BindingLayoutAdapter {
         fun loadImage(imageView: ImageView, url: String) {
             imageView.load(url) {
                 crossfade(600)
+                error(R.drawable.ic_food_joke)
+                placeholder(R.drawable.ic_food_joke)
             }
-
         }
+
+        @BindingAdapter("readApiResponseImage", "readDatabaseImage", requireAll = true)
+        @JvmStatic
+        fun errorImageVisibilityRecipes(
+            imageView: ImageView,
+            response: NetworkResult<FoodRecipe>?,
+            database: List<RecipesEntity>?
+        ) {
+            if (response is NetworkResult.Error && database.isNullOrEmpty()) {
+                imageView.visibility = View.VISIBLE
+            } else {
+                imageView.visibility = View.INVISIBLE
+            }
+        }
+
+        @BindingAdapter("readApiResponseText", "readDatabaseText", requireAll = true)
+        @JvmStatic
+        fun errorTextVisibilityRecipes(
+            textView: TextView,
+            response: NetworkResult<FoodRecipe>?,
+            database: List<RecipesEntity>?
+        ) {
+            if (response is NetworkResult.Error && database.isNullOrEmpty()) {
+                textView.visibility = View.VISIBLE
+                textView.text = response.message.toString()
+            } else {
+                textView.visibility = View.INVISIBLE
+            }
+        }
+
     }
 }
