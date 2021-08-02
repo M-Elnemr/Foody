@@ -27,8 +27,6 @@ class DetailsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setUpTabLayout()
-
-
     }
 
     private fun setUpTabLayout() {
