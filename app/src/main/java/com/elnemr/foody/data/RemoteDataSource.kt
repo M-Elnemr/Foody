@@ -10,4 +10,7 @@ class RemoteDataSource @Inject constructor(private val apiInterface: ApiInterfac
     suspend fun getRecipes(query: HashMap<String, String>): Response<FoodRecipe> =
         apiInterface.fetchRecipes(query)
 
+    suspend fun searchRecipes(searchQuery: HashMap<String, String>): Response<FoodRecipe> =
+        apiInterface.searchRecipes(searchQuery)
+
 }

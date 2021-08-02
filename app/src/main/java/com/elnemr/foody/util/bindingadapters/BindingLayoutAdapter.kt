@@ -1,18 +1,38 @@
 package com.elnemr.foody.util.bindingadapters
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.navigation.findNavController
 import coil.load
 import com.elnemr.foody.R
 import com.elnemr.foody.data.database.RecipesEntity
 import com.elnemr.foody.models.FoodRecipe
+import com.elnemr.foody.models.Result
+import com.elnemr.foody.ui.fragments.recipes.RecipesFragmentDirections
 import com.elnemr.foody.util.NetworkResult
 
 class BindingLayoutAdapter {
     companion object {
+
+        @BindingAdapter("onRecipesClickListen")
+        @JvmStatic
+        fun onRecipesClickListen(view : ConstraintLayout, result: Result){
+            view.setOnClickListener {
+                Log.d("TAG", "onRecipesClickListen: called")
+                try{
+                    val action = RecipesFragmentDirections.actionRecipesFragmentToDetailsActivity(result)
+                    view.findNavController().navigate(action)
+                }catch (e: Exception){
+                    Log.d("TAG", "onRecipesClickListen: $e")
+                }
+            }
+        }
+
         @BindingAdapter("textInt")
         @JvmStatic
         fun setIntText(textView: TextView, intText: Int) {

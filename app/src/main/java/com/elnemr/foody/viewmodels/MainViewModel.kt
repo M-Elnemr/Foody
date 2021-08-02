@@ -35,6 +35,25 @@ class MainViewModel @Inject constructor(
 
     /** RETROFIT*/
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
+    var searchRecipesResponse : MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
+
+    fun getSearchRecipes(queries: HashMap<String, String>) = viewModelScope.launch {
+        gatSearchRecipesSafeCall(queries)
+    }
+
+    private suspend fun gatSearchRecipesSafeCall(queries: HashMap<String, String>) {
+        searchRecipesResponse.value = NetworkResult.Loading()
+        if (hasInternetConnection()){
+            try {
+                val response = repository.remoteDataSource.searchRecipes(queries)
+                searchRecipesResponse.value = handleRecipesFoodResponse(response)
+            }catch (e: Exception){
+                searchRecipesResponse.value = NetworkResult.Error("Bad Internet2")
+            }
+        }else{
+            searchRecipesResponse.value = NetworkResult.Error("No Internet Connection")
+        }
+    }
 
     fun getRecipes(queries: HashMap<String, String>) = viewModelScope.launch {
         getRecipesSafeCall(queries)
@@ -42,16 +61,18 @@ class MainViewModel @Inject constructor(
 
     private suspend fun getRecipesSafeCall(queries: HashMap<String, String>) {
         recipesResponse.value = NetworkResult.Loading()
-        try {
-            val response = repository.remoteDataSource.getRecipes(queries)
-            recipesResponse.value = handleRecipesFoodResponse(response)
+        if (hasInternetConnection()){
+            try {
+                val response = repository.remoteDataSource.getRecipes(queries)
+                recipesResponse.value = handleRecipesFoodResponse(response)
 
-            offlineCacheRecipes(recipesResponse.value!!.data)
+                offlineCacheRecipes(recipesResponse.value!!.data)
 
-        } catch (e: Exception) {
-
-            Log.d("TAG", "getRecipesSafeCall: " + e)
-            recipesResponse.value = NetworkResult.Error("Bad Internet")
+            } catch (e: Exception) {
+                recipesResponse.value = NetworkResult.Error("Bad Internet1")
+            }
+        }else{
+            searchRecipesResponse.value = NetworkResult.Error("No Internet Connection")
         }
     }
 
@@ -73,10 +94,7 @@ class MainViewModel @Inject constructor(
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.M)
     private fun hasInternetConnection(): Boolean {
-
-
         val connectivityManager = getApplication<Application>().getSystemService(
             Context.CONNECTIVITY_SERVICE
         ) as ConnectivityManager

@@ -3,6 +3,7 @@ package com.elnemr.foody.di
 import android.content.Context
 import com.elnemr.foody.data.network.ApiInterface
 import com.elnemr.foody.util.Constants.Companion.BASE_URL
+import com.elnemr.foody.util.NetworkListener
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
