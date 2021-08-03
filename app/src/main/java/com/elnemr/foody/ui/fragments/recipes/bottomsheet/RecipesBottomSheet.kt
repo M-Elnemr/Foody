@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
+import coil.load
 import com.elnemr.foody.R
 import com.elnemr.foody.util.Constants.Companion.DEFAULT_DIET_TYPE
 import com.elnemr.foody.util.Constants.Companion.DEFAULT_MEAL_TYPE
@@ -34,8 +36,7 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         recipesViewModel = ViewModelProvider(requireActivity()).get(RecipesViewModel::class.java)
-        sharedElementEnterTransition =
-            TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
+
     }
 
     override fun onCreateView(
@@ -43,6 +44,9 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         mView = inflater.inflate(R.layout.recipes_bottom_sheet, container, false)
+
+        sharedElementEnterTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(android.R.transition.move)
 
         updateChips()
 

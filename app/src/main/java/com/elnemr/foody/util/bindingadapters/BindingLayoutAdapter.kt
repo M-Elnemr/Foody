@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import coil.load
 import com.elnemr.foody.R
 import com.elnemr.foody.data.database.RecipesEntity
@@ -15,19 +16,24 @@ import com.elnemr.foody.models.FoodRecipe
 import com.elnemr.foody.models.Result
 import com.elnemr.foody.ui.fragments.recipes.RecipesFragmentDirections
 import com.elnemr.foody.util.NetworkResult
+import org.jsoup.Jsoup
 
 class BindingLayoutAdapter {
     companion object {
 
         @BindingAdapter("onRecipesClickListen")
         @JvmStatic
-        fun onRecipesClickListen(view : ConstraintLayout, result: Result){
+        fun onRecipesClickListen(view: ConstraintLayout, result: Result) {
             view.setOnClickListener {
                 Log.d("TAG", "onRecipesClickListen: called")
-                try{
-                    val action = RecipesFragmentDirections.actionRecipesFragmentToDetailsActivity(result)
+                try {
+//                    val extras = FragmentNavigatorExtras(
+//                        view.findViewById<ImageView>(R.id.recipe_image) to "imageTrans"
+//                    )
+                    val action =
+                        RecipesFragmentDirections.actionRecipesFragmentToDetailsActivity(result)
                     view.findNavController().navigate(action)
-                }catch (e: Exception){
+                } catch (e: Exception) {
                     Log.d("TAG", "onRecipesClickListen: $e")
                 }
             }
@@ -42,7 +48,6 @@ class BindingLayoutAdapter {
         @BindingAdapter("backgroundBooleanGreen")
         @JvmStatic
         fun changeBackgroundColor(view: View, data: Boolean) {
-
             if (data) {
                 when (view) {
                     is TextView -> {
@@ -50,6 +55,15 @@ class BindingLayoutAdapter {
                     }
                     is ImageView -> {
                         view.setColorFilter(ContextCompat.getColor(view.context, R.color.green))
+                    }
+                }
+            }else{
+                when (view) {
+                    is TextView -> {
+                        view.setTextColor(ContextCompat.getColor(view.context, R.color.darkGray))
+                    }
+                    is ImageView -> {
+                        view.setColorFilter(ContextCompat.getColor(view.context, R.color.darkGray))
                     }
                 }
             }
@@ -93,6 +107,16 @@ class BindingLayoutAdapter {
             } else {
                 textView.visibility = View.INVISIBLE
             }
+        }
+
+        @BindingAdapter("parseHtml")
+        @JvmStatic
+        fun parseHtml(textView: TextView, text: String?) {
+            if (text != null) {
+                val txt = Jsoup.parse(text).text()
+                textView.text = txt
+            }
+
         }
 
     }

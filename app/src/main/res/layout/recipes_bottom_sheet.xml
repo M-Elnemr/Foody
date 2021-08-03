@@ -15,7 +15,7 @@
         android:background="@drawable/very_round_background_primary"
         android:padding="12dp"
         android:src="@drawable/ic_restaurant"
-        android:transitionName="fabImage"
+        android:transitionName="imageTrans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

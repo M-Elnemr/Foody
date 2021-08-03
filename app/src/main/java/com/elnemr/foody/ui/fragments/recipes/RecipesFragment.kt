@@ -79,7 +79,7 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener , SearchView.
     private fun onClickMethods() {
         binding.recipesFab.setOnClickListener {
             val navExtra = FragmentNavigatorExtras(
-                binding.recipesFab to "fabImage"
+                binding.recipesFab to "imageTrans"
             )
             findNavController().navigate(
                 R.id.action_recipesFragment_to_recipesBottomSheet,
