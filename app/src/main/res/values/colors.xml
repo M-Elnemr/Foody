@@ -31,5 +31,7 @@
 
     //custom tabLayout style
     <color name="actionBarBackground">@color/colorPrimaryDark</color>
+    <color name="cardBackgroundColor" >@color/white</color>
+    <color name="titleColor" >@color/darker</color>
 
 </resources>
