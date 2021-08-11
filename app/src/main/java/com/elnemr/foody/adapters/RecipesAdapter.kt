@@ -3,28 +3,16 @@ package com.elnemr.foody.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import com.elnemr.foody.adapters.base.BaseAdapter
 import com.elnemr.foody.adapters.base.BaseViewHolder
 import com.elnemr.foody.databinding.RecipesRowLayoutBinding
 import com.elnemr.foody.models.Result
-import okhttp3.OkHttpClient
-import okhttp3.Response
+import com.elnemr.foody.adapters.base.MainDiffUtil
 
 
 class RecipesAdapter : BaseAdapter<Result>() {
-    val diffCallback = object : DiffUtil.ItemCallback<Result>() {
-        override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
-            return oldItem === newItem
-        }
 
-        override fun areContentsTheSame(oldItem: Result, newItem: Result): Boolean {
-            return oldItem == newItem
-
-        }
-    }
-    val mDiffer = AsyncListDiffer<Result>(this, diffCallback)
-     /////////////////////////////////////////////////////////////////////////////////////////
+    private val mDiffer = AsyncListDiffer(this, MainDiffUtil<Result>())
 
     private var recipes: MutableList<Result> = mutableListOf()
 
@@ -47,13 +35,12 @@ class RecipesAdapter : BaseAdapter<Result>() {
     override fun setDataList(dataList: List<Result>) {
         recipes.clear()
         recipes.addAll(dataList)
-        mDiffer.submitList(dataList)
+        mDiffer.submitList(recipes)
     }
 
     override fun addDataList(dataList: List<Result>) {
-        val list = ArrayList(recipes)
-        list.addAll(dataList)
-        mDiffer.submitList(list)
+        recipes.addAll(dataList)
+        mDiffer.currentList.addAll(recipes)
     }
 
     override fun clearDataList() {

@@ -15,6 +15,7 @@ import com.elnemr.foody.data.database.RecipesEntity
 import com.elnemr.foody.models.FoodRecipe
 import com.elnemr.foody.models.Result
 import com.elnemr.foody.ui.fragments.recipes.RecipesFragmentDirections
+import com.elnemr.foody.util.Constants
 import com.elnemr.foody.util.NetworkResult
 import org.jsoup.Jsoup
 
@@ -41,7 +42,7 @@ class BindingLayoutAdapter {
 
         @BindingAdapter("textInt")
         @JvmStatic
-        fun setIntText(textView: TextView, intText: Int) {
+        fun setIntText(textView: TextView, intText: Any) {
             textView.text = intText.toString()
         }
 
@@ -119,5 +120,12 @@ class BindingLayoutAdapter {
 
         }
 
+        @BindingAdapter("loadBaseUrlImage")
+        @JvmStatic
+        fun loadBaseImage(imageView: ImageView, image: String){
+            imageView.load(Constants.BASE_IMAGE_URL + image)
+        }
     }
+
+
 }
