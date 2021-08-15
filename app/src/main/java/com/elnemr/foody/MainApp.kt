@@ -1,8 +1,6 @@
 package com.elnemr.foody
 
 import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
 import dagger.hilt.android.HiltAndroidApp
 
 
@@ -19,8 +17,8 @@ class MainApp : Application() {
         instan = instance!!
     }
 
-    companion object{
-lateinit var instan : MainApp
+    companion object {
+        lateinit var instan: MainApp
     }
 
 }

@@ -13,21 +13,15 @@ class IngredientAdapter : BaseAdapter<ExtendedIngredients>() {
 
     private val mDiff = AsyncListDiffer(this, MainDiffUtil<ExtendedIngredients>())
 
-    private val ingredients: MutableList<ExtendedIngredients> = mutableListOf()
-
     override fun setDataList(dataList: List<ExtendedIngredients>) {
-        ingredients.clear()
-        ingredients.addAll(dataList)
-        mDiff.submitList(ingredients)
+        mDiff.submitList(dataList)
     }
 
     override fun addDataList(dataList: List<ExtendedIngredients>) {
-        ingredients.addAll(dataList)
-        mDiff.currentList.addAll(ingredients)
+        mDiff.currentList.addAll(dataList)
     }
 
     override fun clearDataList() {
-        ingredients.clear()
         mDiff.currentList.clear()
     }
 

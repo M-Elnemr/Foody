@@ -6,7 +6,7 @@ import com.elnemr.foody.models.FoodRecipe
 import com.elnemr.foody.util.Constants.Companion.TABLE
 
 @Entity(tableName = TABLE)
-class RecipesEntity(
+class   RecipesEntity(
    var foodRecipe: FoodRecipe
 ){
     @PrimaryKey(autoGenerate = false)

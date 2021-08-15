@@ -10,6 +10,7 @@ import androidx.transition.TransitionInflater
 import coil.load
 import com.elnemr.foody.R
 import com.elnemr.foody.models.Result
+import com.elnemr.foody.util.Constants.Companion.RECIPE_RESULT_KEY
 import kotlinx.android.synthetic.main.fragment_over_view.view.*
 import org.jsoup.Jsoup
 
@@ -25,7 +26,7 @@ class OverViewFragment : Fragment() {
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
 
         val args = arguments
-        val result : Result? = args?.getParcelable("result")
+        val result : Result? = args?.getParcelable(RECIPE_RESULT_KEY)
 
         if (result != null)
             loadDataIntoView(result)

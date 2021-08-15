@@ -21,27 +21,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-//
-//    @Singleton
-//    @Provides
-//    fun provideCache(@ApplicationContext context: Context): Cache = Cache(context.cacheDir, 5 * 1024 * 1024)
-//
-//    @Singleton
-//    @Provides
-//    fun provideInterceptor(@ApplicationContext context: Context): Interceptor{
-//        return Interceptor { chain ->
-//            val request: Request = chain.request()
-////            request = if (hasNetwork(context)) request.newBuilder()
-////                .header("Cache-Control", "public, max-age=" + 60)
-////                .build() else
-//                    request.newBuilder().header(
-//                "Cache-Control",
-//                "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7
-//            ).build()
-//            chain.proceed(request)
-//        }
-//    }
-
     @Singleton
     @Provides
     fun provideRetrofitBuilder(): Retrofit.Builder = Retrofit.Builder()
@@ -66,18 +45,11 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideApi(
-//        cache: Cache,
-//        interceptor: Interceptor,
         okHttpClient: OkHttpClient.Builder,
         converterFactory: GsonConverterFactory,
         loggingInterceptor: HttpLoggingInterceptor,
         builder: Retrofit.Builder
     ): ApiInterface {
-
-        /////////////// Retrofit Cache //////////////////
-//        okHttpClient.cache(cache)
-//        okHttpClient.addInterceptor(interceptor)
-        /////////////////////////////////////////////////
 
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         okHttpClient.addNetworkInterceptor(loggingInterceptor)

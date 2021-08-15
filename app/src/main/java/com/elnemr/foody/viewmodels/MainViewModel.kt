@@ -93,7 +93,6 @@ class MainViewModel @Inject constructor(
         }
     }
 
-
     private fun hasInternetConnection(): Boolean {
         val connectivityManager = getApplication<Application>().getSystemService(
             Context.CONNECTIVITY_SERVICE

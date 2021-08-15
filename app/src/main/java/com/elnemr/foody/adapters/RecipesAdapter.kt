@@ -14,8 +14,6 @@ class RecipesAdapter : BaseAdapter<Result>() {
 
     private val mDiffer = AsyncListDiffer(this, MainDiffUtil<Result>())
 
-    private var recipes: MutableList<Result> = mutableListOf()
-
     class RecipesHolder(private val binding: RecipesRowLayoutBinding) :
         BaseViewHolder<Result>(binding) {
         override fun bind(result: Result) {
@@ -33,18 +31,14 @@ class RecipesAdapter : BaseAdapter<Result>() {
     override fun getItemCount(): Int = mDiffer.currentList.size
 
     override fun setDataList(dataList: List<Result>) {
-        recipes.clear()
-        recipes.addAll(dataList)
-        mDiffer.submitList(recipes)
+        mDiffer.submitList(dataList)
     }
 
     override fun addDataList(dataList: List<Result>) {
-        recipes.addAll(dataList)
-        mDiffer.currentList.addAll(recipes)
+        mDiffer.currentList.addAll(dataList)
     }
 
     override fun clearDataList() {
-        recipes.clear()
         mDiffer.currentList.clear()
     }
 

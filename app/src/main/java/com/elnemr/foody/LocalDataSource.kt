@@ -10,7 +10,6 @@ class LocalDataSource @Inject constructor(private val recipesDao: RecipesDao) {
     suspend fun insertData(recipesEntity: RecipesEntity) =
         recipesDao.insertRecipes(recipesEntity)
 
-
     fun fetchData(): Flow<List<RecipesEntity>> = recipesDao.readRecipes()
 
 }
